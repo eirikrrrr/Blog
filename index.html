@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eirikrrrr — Blog</title>
+  <style>
+    /* ── Design tokens ── */
+    :root {
+      --bg:        #0d0d0d;
+      --surface:   #181818;
+      --border:    #2a2a2a;
+      --yellow:    #f5c518;
+      --red:       #e63946;
+      --text:      #e8e8e8;
+      --muted:     #8a8a8a;
+      --radius:    12px;
+      --max-w:     780px;
+      --font:      'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Base ── */
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+
+    a { color: var(--yellow); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 2px solid var(--border);
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .logo span:first-child { color: var(--yellow); }
+    .logo span:last-child  { color: var(--red); }
+
+    nav a {
+      margin-left: 1.4rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--yellow); text-decoration: none; }
+
+    /* ── Hero ── */
+    .hero {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 4rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .hero .tag {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 50px;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .hero h1 .highlight { color: var(--yellow); }
+    .hero .subtitle {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 540px;
+      margin: 0 auto 2rem;
+    }
+    .hero .meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .hero .meta .dot { color: var(--border); }
+
+    /* ── Cover image ── */
+    .cover {
+      max-width: var(--max-w);
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+    }
+    .cover-img {
+      width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 16 / 7;
+      background: linear-gradient(135deg, #1a0a00 0%, #2d0800 30%, #1a0505 60%, #0d0d0d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border: 1px solid var(--border);
+    }
+    /* Decorative grid overlay */
+    .cover-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(245,197,24,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,197,24,.07) 1px, transparent 1px);
+      background-size: 40px 40px;
+      border-radius: inherit;
+    }
+    .cover-inner {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
+    .cover-emoji { font-size: 5rem; line-height: 1; display: block; margin-bottom: .5rem; }
+    .cover-label {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--yellow);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 0 0 30px rgba(245,197,24,.6);
+    }
+
+    /* ── Article body ── */
+    article {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+
+    article h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 2.5rem 0 .8rem;
+      color: var(--yellow);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    article h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      margin-left: .5rem;
+    }
+
+    article p {
+      margin-bottom: 1.2rem;
+      color: #d4d4d4;
+    }
+
+    article ul, article ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+    article li { margin-bottom: .5rem; color: #d4d4d4; }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-left: 4px solid var(--yellow);
+      background: #191300;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1rem 1.2rem;
+      margin: 1.8rem 0;
+      font-size: .97rem;
+    }
+    .callout.red { border-color: var(--red); background: #190005; }
+
+    /* ── Topic cards ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin: 1.8rem 0;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1rem;
+      transition: border-color .2s, transform .2s;
+    }
+    .card:hover { border-color: var(--yellow); transform: translateY(-3px); }
+    .card .icon { font-size: 2rem; margin-bottom: .5rem; display: block; }
+    .card strong { display: block; font-size: .95rem; margin-bottom: .3rem; color: #fff; }
+    .card span { font-size: .85rem; color: var(--muted); }
+
+    /* ── Divider ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+    footer span { color: var(--yellow); }
+    footer .red { color: var(--red); }
+
+    /* ── Responsive ── */
+    @media (max-width: 520px) {
+      .hero h1 { font-size: 1.8rem; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Navigation ─── -->
+  <header>
+    <div class="logo">
+      <span>eirik</span><span>rrrr</span>
+    </div>
+    <nav>
+      <a href="#inicio">Inicio</a>
+      <a href="#temas">Temas</a>
+      <a href="#sobre-mi">Sobre mí</a>
+    </nav>
+  </header>
+
+  <!-- ─── Hero ─── -->
+  <section class="hero" id="inicio">
+    <span class="tag">✨ Primer post</span>
+    <h1>Bienvenido a mi <span class="highlight">Blog</span> 🚀</h1>
+    <p class="subtitle">
+      Un espacio donde comparto ideas, aprendizajes y experiencias sobre tecnología, creatividad y mucho más.
+    </p>
+    <div class="meta">
+      <span>📅 22 de febrero, 2026</span>
+      <span class="dot">•</span>
+      <span>👤 eirikrrrr</span>
+      <span class="dot">•</span>
+      <span>⏱ 3 min de lectura</span>
+    </div>
+  </section>
+
+  <!-- ─── Cover image ─── -->
+  <div class="cover">
+    <div class="cover-img">
+      <div class="cover-inner">
+        <span class="cover-emoji">✍️</span>
+        <div class="cover-label">Blog — eirikrrrr</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Article ─── -->
+  <article>
+
+    <h2>🌟 ¿De qué va este blog?</h2>
+    <p>
+      ¡Hola y bienvenido! 👋 Este es el primer post y quiero aprovechar para presentarte este espacio y
+      contarte exactamente <strong>qué puedes esperar encontrar aquí</strong>.
+    </p>
+    <p>
+      Este blog nació de la necesidad de tener un lugar donde plasmar ideas, documentar proyectos y compartir
+      conocimiento de forma abierta. Si eres curioso, apasionado por la tecnología, el diseño o simplemente
+      te gusta aprender cosas nuevas — <strong>estás en el lugar correcto</strong>. 🎯
+    </p>
+
+    <div class="callout">
+      💡 <strong>TL;DR:</strong> Un blog personal sobre tecnología, proyectos, tutoriales y reflexiones.
+      Con una pizca de creatividad y mucho café. ☕
+    </div>
+
+    <h2>🗂️ Temas que voy a tratar</h2>
+    <p>
+      El contenido de este blog va a girar en torno a varios ejes temáticos que me apasionan y en los que
+      sigo aprendiendo constantemente:
+    </p>
+
+    <div class="cards" id="temas">
+      <div class="card">
+        <span class="icon">💻</span>
+        <strong>Desarrollo Web</strong>
+        <span>HTML, CSS, JavaScript, frameworks modernos y buenas prácticas.</span>
+      </div>
+      <div class="card">
+        <span class="icon">🛠️</span>
+        <strong>Proyectos</strong>
+        <span>Making-of de proyectos personales: desde la idea hasta el despliegue.</span>
+      </div>
+      <div class="card">
+        <span class="icon">📚</span>
+        <strong>Tutoriales</strong>
+        <span>Guías paso a paso para resolver problemas reales con código.</span>
+      </div>
+      <div class="card">
+        <span class="icon">🎨</span>
+        <strong>Diseño &amp; UX</strong>
+        <span>Interfaz, experiencia de usuario y por qué el diseño importa.</span>
+      </div>
+      <div class="card">
+        <span class="icon">🤖</span>
+        <strong>Inteligencia Artificial</strong>
+        <span>Noticias, herramientas y experimentos con IA.</span>
+      </div>
+      <div class="card">
+        <span class="icon">💭</span>
+        <strong>Reflexiones</strong>
+        <span>Opiniones y aprendizajes del camino como desarrollador.</span>
+      </div>
+    </div>
+
+    <h2>🎯 ¿Para quién es este blog?</h2>
+    <p>Este espacio está pensado para:</p>
+    <ul>
+      <li>🧑‍💻 Desarrolladores en cualquier nivel de experiencia</li>
+      <li>📖 Personas que quieren aprender sobre tecnología sin rollos</li>
+      <li>🚀 Builders, makers y emprendedores digitales</li>
+      <li>🔍 Curiosos que quieren entender el mundo tech</li>
+    </ul>
+
+    <div class="callout red">
+      🔥 <strong>Spoiler:</strong> No hay contenido aburrido aquí. Si algo no te resulta útil o interesante,
+      me lo dices y lo mejoro. La retroalimentación siempre es bienvenida.
+    </div>
+
+    <h2 id="sobre-mi">👤 ¿Quién soy yo?</h2>
+    <p>
+      Soy <strong>eirikrrrr</strong> 👾, un desarrollador apasionado por construir cosas en internet.
+      Me encanta experimentar con nuevas tecnologías, resolver problemas complicados de formas simples y
+      compartir lo que aprendo en el camino.
+    </p>
+    <p>
+      Este blog es mi cuaderno público. Aquí apunto todo aquello que me parece interesante, útil o que
+      simplemente quiero recordar. Y si a ti también te sirve — ¡perfecto!
+    </p>
+
+    <hr />
+
+    <h2>🚀 ¿Qué viene a continuación?</h2>
+    <p>
+      Ya tengo varios posts en mente que iré publicando próximamente. Entre ellos:
+    </p>
+    <ol>
+      <li>⚡ Cómo monté este blog desde cero</li>
+      <li>🎨 El proceso de diseñar una paleta de colores llamativa y funcional</li>
+      <li>🛠️ Mis herramientas favoritas para desarrollar en 2026</li>
+      <li>🤖 Experimentos con IA que realmente me sorprendieron</li>
+    </ol>
+
+    <p>
+      No te pierdas ninguno. ¡Vuelve pronto! 🙌
+    </p>
+
+  </article>
+
+  <!-- ─── Footer ─── -->
+  <footer>
+    <p>Hecho con <span class="red">❤️</span> y mucho <span>☕</span> por <strong>eirikrrrr</strong></p>
+    <p style="margin-top:.5rem">© 2026 — Todos los derechos reservados</p>
+  </footer>
+
+</body>
+</html>
