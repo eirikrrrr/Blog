@@ -1,0 +1,88 @@
+site_name: eirikrrrr Blog
+site_url: https://eirikrrrr.github.io/Blog
+site_description: Un blog sobre AI, Openclaw, Software y Código
+site_author: eirikrrrr
+repo_url: https://github.com/eirikrrrr/Blog
+repo_name: eirikrrrr/Blog
+
+theme:
+  name: material
+  language: es
+  palette:
+    - scheme: slate
+      primary: deep purple
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Cambiar a modo claro
+    - scheme: default
+      primary: deep purple
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Cambiar a modo oscuro
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+    - toc.follow
+  icon:
+    logo: material/brain
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang: es
+  - blog:
+      blog_dir: blog
+      post_date_format: long
+      post_url_format: "{date}/{slug}"
+      categories_allowed:
+        - AI
+        - Openclaw
+        - Software
+        - Código
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+nav:
+  - Inicio: index.md
+  - Blog:
+    - blog/index.md
+  - Categorías:
+    - AI: categories/ai.md
+    - Openclaw: categories/openclaw.md
+    - Software: categories/software.md
+    - Código: categories/code.md
+  - Acerca de: about.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/eirikrrrr
+  generator: false
