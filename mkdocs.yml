@@ -1,7 +1,7 @@
-site_name: eirikrrrr Blog
+site_name: Eirikrrrr
 site_url: https://eirikrrrr.github.io/Blog
-site_description: Un blog sobre AI, Openclaw, Software y Código
-site_author: eirikrrrr
+site_description: Un blog sobre Experimentos, Software, Openclaw, Dinero y Código
+site_author: Eirikrrrr
 repo_url: https://github.com/eirikrrrr/Blog
 repo_name: eirikrrrr/Blog
 
@@ -50,6 +50,8 @@ plugins:
         - Openclaw
         - Software
         - Código
+        - Dinero
+        - Experimentos
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -72,13 +74,15 @@ markdown_extensions:
 
 nav:
   - Inicio: index.md
-  - Blog:
+  - Laboratorio:
     - blog/index.md
   - Categorías:
     - AI: categories/ai.md
     - Openclaw: categories/openclaw.md
     - Software: categories/software.md
     - Código: categories/code.md
+    - Dinero: categories/dinero.md
+    - Experimentos: categories/experimentos.md
   - Acerca de: about.md
 
 extra:
