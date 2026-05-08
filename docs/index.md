@@ -1,5 +1,10 @@
 # Bienvenido a eirikrrrr Blog 🧠
 
+
+<div class="badge-base LI-profile-badge" data-locale="es_ES" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="erick-alejandro-graterol-14a962266" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://es.linkedin.com/in/erick-alejandro-graterol-14a962266?trk=profile-badge">Erick Alejandro Graterol</a></div>
+
+<br>
+
 <div class="hero" markdown>
 
 [Ver el Blog](blog/index.md){ .md-button .md-button--primary }
