@@ -1,0 +1,24 @@
+[
+  {
+    "id": "ingles-para-dummies",
+    "title": "Inglés para Dummies",
+    "author": "Brenner Gail",
+    "year": 2020,
+    "description": "Una guía práctica y accesible para aprender inglés, diseñada para principiantes que quieren dominar el idioma de manera gradual y efectiva.",
+    "cover": "",
+    "pdf": "books/Ingles para Dummies (ebook) -- Brenner Gail. -- ( WeLib.org ).epub.pdf",
+    "pages": 570,
+    "language": "Español"
+  },
+  {
+    "id": "24-tiempos-verbales-ingles",
+    "title": "Los 24 tiempos verbales del Inglés",
+    "author": "Adolfo Bieri",
+    "year": 2020,
+    "description": "Una referencia completa sobre los tiempos verbales en inglés, explicados de forma clara y con ejemplos prácticos para dominar la gramática inglesa.",
+    "cover": "",
+    "pdf": "books/Los 24 tiempos verbales del Inglés -- Adolfo Bieri -- ( WeLib.org ).pdf",
+    "pages": 69,
+    "language": "Español"
+  }
+]
