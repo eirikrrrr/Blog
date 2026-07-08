@@ -3,391 +3,167 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>eirikrrrr — Blog</title>
-  <style>
-    /* ── Design tokens ── */
-    :root {
-      --bg:        #0d0d0d;
-      --surface:   #181818;
-      --border:    #2a2a2a;
-      --yellow:    #f5c518;
-      --red:       #e63946;
-      --text:      #e8e8e8;
-      --muted:     #8a8a8a;
-      --radius:    12px;
-      --max-w:     780px;
-      --font:      'Segoe UI', system-ui, -apple-system, sans-serif;
-    }
-
-    /* ── Reset ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    /* ── Base ── */
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
-      line-height: 1.7;
-      font-size: 1.05rem;
-    }
-
-    a { color: var(--yellow); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* ── Header ── */
-    header {
-      border-bottom: 2px solid var(--border);
-      padding: 1.2rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      background: var(--bg);
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-    .logo span:first-child { color: var(--yellow); }
-    .logo span:last-child  { color: var(--red); }
-
-    nav a {
-      margin-left: 1.4rem;
-      font-size: 0.9rem;
-      color: var(--muted);
-      transition: color .2s;
-    }
-    nav a:hover { color: var(--yellow); text-decoration: none; }
-
-    /* ── Hero ── */
-    .hero {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 4rem 1.5rem 2rem;
-      text-align: center;
-    }
-    .hero .tag {
-      display: inline-block;
-      background: var(--red);
-      color: #fff;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 4px 14px;
-      border-radius: 50px;
-      margin-bottom: 1.2rem;
-    }
-    .hero h1 {
-      font-size: clamp(2rem, 6vw, 3rem);
-      font-weight: 900;
-      line-height: 1.15;
-      margin-bottom: 1rem;
-    }
-    .hero h1 .highlight { color: var(--yellow); }
-    .hero .subtitle {
-      color: var(--muted);
-      font-size: 1.1rem;
-      max-width: 540px;
-      margin: 0 auto 2rem;
-    }
-    .hero .meta {
-      font-size: 0.85rem;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .hero .meta .dot { color: var(--border); }
-
-    /* ── Cover image ── */
-    .cover {
-      max-width: var(--max-w);
-      margin: 0 auto 3rem;
-      padding: 0 1.5rem;
-    }
-    .cover-img {
-      width: 100%;
-      border-radius: var(--radius);
-      overflow: hidden;
-      aspect-ratio: 16 / 7;
-      background: linear-gradient(135deg, #1a0a00 0%, #2d0800 30%, #1a0505 60%, #0d0d0d 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      border: 1px solid var(--border);
-    }
-    /* Decorative grid overlay */
-    .cover-img::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(245,197,24,.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(245,197,24,.07) 1px, transparent 1px);
-      background-size: 40px 40px;
-      border-radius: inherit;
-    }
-    .cover-inner {
-      position: relative;
-      text-align: center;
-      z-index: 1;
-    }
-    .cover-emoji { font-size: 5rem; line-height: 1; display: block; margin-bottom: .5rem; }
-    .cover-label {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--yellow);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-shadow: 0 0 30px rgba(245,197,24,.6);
-    }
-
-    /* ── Article body ── */
-    article {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 1.5rem 5rem;
-    }
-
-    article h2 {
-      font-size: 1.5rem;
-      font-weight: 800;
-      margin: 2.5rem 0 .8rem;
-      color: var(--yellow);
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-    }
-    article h2::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-      margin-left: .5rem;
-    }
-
-    article p {
-      margin-bottom: 1.2rem;
-      color: #d4d4d4;
-    }
-
-    article ul, article ol {
-      padding-left: 1.5rem;
-      margin-bottom: 1.2rem;
-    }
-    article li { margin-bottom: .5rem; color: #d4d4d4; }
-
-    /* ── Callout boxes ── */
-    .callout {
-      border-left: 4px solid var(--yellow);
-      background: #191300;
-      border-radius: 0 var(--radius) var(--radius) 0;
-      padding: 1rem 1.2rem;
-      margin: 1.8rem 0;
-      font-size: .97rem;
-    }
-    .callout.red { border-color: var(--red); background: #190005; }
-
-    /* ── Topic cards ── */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1rem;
-      margin: 1.8rem 0;
-    }
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.2rem 1rem;
-      transition: border-color .2s, transform .2s;
-    }
-    .card:hover { border-color: var(--yellow); transform: translateY(-3px); }
-    .card .icon { font-size: 2rem; margin-bottom: .5rem; display: block; }
-    .card strong { display: block; font-size: .95rem; margin-bottom: .3rem; color: #fff; }
-    .card span { font-size: .85rem; color: var(--muted); }
-
-    /* ── Divider ── */
-    hr {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 2.5rem 0;
-    }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 1.5rem;
-      text-align: center;
-      font-size: .85rem;
-      color: var(--muted);
-    }
-    footer span { color: var(--yellow); }
-    footer .red { color: var(--red); }
-
-    /* ── Responsive ── */
-    @media (max-width: 520px) {
-      .hero h1 { font-size: 1.8rem; }
-      nav { display: none; }
-    }
-  </style>
+  <meta name="description" content="Biblioteca esotérica de viajes astrales y cómo realizarlos: clásicos, manuales prácticos, investigación y místicos." />
+  <title>Viajes Astrales · Biblioteca esotérica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9C%8C%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
 
-  <!-- ─── Navigation ─── -->
-  <header>
-    <div class="logo">
-      <span>eirik</span><span>rrrr</span>
-    </div>
-    <nav>
-      <a href="#inicio">Inicio</a>
-      <a href="#temas">Temas</a>
-      <a href="#sobre-mi">Sobre mí</a>
+  <header class="site-header">
+    <a class="brand" href="#">
+      <span class="brand-mark">♁</span>
+      <span class="brand-text">
+        <strong>Astral</strong>
+        <em>librería de nicho</em>
+      </span>
+    </a>
+    <nav class="site-nav" aria-label="Navegación">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#guia">Guía</a>
+      <a href="#sobre">Sobre</a>
     </nav>
   </header>
 
-  <!-- ─── Hero ─── -->
-  <section class="hero" id="inicio">
-    <span class="tag">✨ Primer post</span>
-    <h1>Bienvenido a mi <span class="highlight">Blog</span> 🚀</h1>
-    <p class="subtitle">
-      Un espacio donde comparto ideas, aprendizajes y experiencias sobre tecnología, creatividad y mucho más.
-    </p>
-    <div class="meta">
-      <span>📅 22 de febrero, 2026</span>
-      <span class="dot">•</span>
-      <span>👤 eirikrrrr</span>
-      <span class="dot">•</span>
-      <span>⏱ 3 min de lectura</span>
-    </div>
-  </section>
-
-  <!-- ─── Cover image ─── -->
-  <div class="cover">
-    <div class="cover-img">
-      <div class="cover-inner">
-        <span class="cover-emoji">✍️</span>
-        <div class="cover-label">Blog — eirikrrrr</div>
+  <main>
+    <!-- ── Hero ── -->
+    <section class="hero" id="inicio">
+      <div class="hero-inner">
+        <p class="eyebrow"><span class="sigil">☽</span> Biblioteca esotérica <span class="sigil">☾</span></p>
+        <h1 class="hero-title">
+          Viajes <em>Astrales</em><br />
+          <span class="hero-sub">y cómo realizarlos</span>
+        </h1>
+        <p class="lead">
+          Una colección curada de obras sobre la proyección del cuerpo astral: clásicos fundadores,
+          manuales prácticos, investigación rigurosa y textos místicos que han iluminado el camino.
+        </p>
+        <div class="hero-stats" id="hero-stats" aria-live="polite">
+          <span><strong data-stat="count">—</strong> obras</span>
+          <span class="sep">✦</span>
+          <span><strong data-stat="cats">—</strong> categorías</span>
+          <span class="sep">✦</span>
+          <span>de 1758 a 2001</span>
+        </div>
+        <a class="cta" href="#catalogo">Explorar el catálogo <span aria-hidden="true">→</span></a>
       </div>
-    </div>
-  </div>
-
-  <!-- ─── Article ─── -->
-  <article>
-
-    <h2>🌟 ¿De qué va este blog?</h2>
-    <p>
-      ¡Hola y bienvenido! 👋 Este es el primer post y quiero aprovechar para presentarte este espacio y
-      contarte exactamente <strong>qué puedes esperar encontrar aquí</strong>.
-    </p>
-    <p>
-      Este blog nació de la necesidad de tener un lugar donde plasmar ideas, documentar proyectos y compartir
-      conocimiento de forma abierta. Si eres curioso, apasionado por la tecnología, el diseño o simplemente
-      te gusta aprender cosas nuevas — <strong>estás en el lugar correcto</strong>. 🎯
-    </p>
-
-    <div class="callout">
-      💡 <strong>TL;DR:</strong> Un blog personal sobre tecnología, proyectos, tutoriales y reflexiones.
-      Con una pizca de creatividad y mucho café. ☕
-    </div>
-
-    <h2>🗂️ Temas que voy a tratar</h2>
-    <p>
-      El contenido de este blog va a girar en torno a varios ejes temáticos que me apasionan y en los que
-      sigo aprendiendo constantemente:
-    </p>
-
-    <div class="cards" id="temas">
-      <div class="card">
-        <span class="icon">💻</span>
-        <strong>Desarrollo Web</strong>
-        <span>HTML, CSS, JavaScript, frameworks modernos y buenas prácticas.</span>
+      <div class="orbit" aria-hidden="true">
+        <div class="orbit-ring r1"></div>
+        <div class="orbit-ring r2"></div>
+        <div class="orbit-ring r3"></div>
+        <div class="orbit-core">🜍</div>
       </div>
-      <div class="card">
-        <span class="icon">🛠️</span>
-        <strong>Proyectos</strong>
-        <span>Making-of de proyectos personales: desde la idea hasta el despliegue.</span>
+    </section>
+
+    <!-- ── Controles ── -->
+    <section class="controls" id="catalogo">
+      <div class="search-wrap">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input
+          id="search"
+          type="search"
+          placeholder="Buscar por título, autor o palabra clave…"
+          autocomplete="off"
+          aria-label="Buscar libros"
+        />
       </div>
-      <div class="card">
-        <span class="icon">📚</span>
-        <strong>Tutoriales</strong>
-        <span>Guías paso a paso para resolver problemas reales con código.</span>
+      <div class="filters" id="filters" role="tablist" aria-label="Filtrar por categoría">
+        <!-- los chips los genera app.js -->
       </div>
-      <div class="card">
-        <span class="icon">🎨</span>
-        <strong>Diseño &amp; UX</strong>
-        <span>Interfaz, experiencia de usuario y por qué el diseño importa.</span>
+      <p class="result-count" id="result-count" aria-live="polite"></p>
+    </section>
+
+    <!-- ── Catálogo ── -->
+    <section class="catalog">
+      <div class="grid" id="grid" aria-live="polite"></div>
+      <div class="empty" id="empty" hidden>
+        <span class="empty-sigil">∅</span>
+        <p>No se encontraron obras con ese criterio.</p>
+        <p class="muted">Prueba con otro término o un filtro distinto.</p>
       </div>
-      <div class="card">
-        <span class="icon">🤖</span>
-        <strong>Inteligencia Artificial</strong>
-        <span>Noticias, herramientas y experimentos con IA.</span>
-      </div>
-      <div class="card">
-        <span class="icon">💭</span>
-        <strong>Reflexiones</strong>
-        <span>Opiniones y aprendizajes del camino como desarrollador.</span>
-      </div>
-    </div>
+    </section>
 
-    <h2>🎯 ¿Para quién es este blog?</h2>
-    <p>Este espacio está pensado para:</p>
-    <ul>
-      <li>🧑‍💻 Desarrolladores en cualquier nivel de experiencia</li>
-      <li>📖 Personas que quieren aprender sobre tecnología sin rollos</li>
-      <li>🚀 Builders, makers y emprendedores digitales</li>
-      <li>🔍 Curiosos que quieren entender el mundo tech</li>
-    </ul>
+    <!-- ── Sección guía ── -->
+    <section class="guide" id="guia">
+      <h2><span class="rule"></span> Pasos para un primer viaje astral <span class="rule"></span></h2>
+      <ol class="steps">
+        <li data-step="01">
+          <span class="step-n">01</span>
+          <strong>Aquietar el cuerpo</strong>
+          <p>Acuéstate en una postura neutra, preferiblemente de espaldas, en un lugar silencioso y a oscuras.</p>
+        </li>
+        <li data-step="02">
+          <span class="step-n">02</span>
+          <strong>Relajación profunda</strong>
+          <p>Tensa y suelta cada grupo muscular hasta alcanzar un estado de parlisis del sueño.</p>
+        </li>
+        <li data-step="03">
+          <span class="step-n">03</span>
+          <strong>Foco mental</strong>
+          <p>Mantén un único punto de atención —un mantra, la respiración o una visualización— mientras el cuerpo se duerme.</p>
+        </li>
+        <li data-step="04">
+          <span class="step-n">04</span>
+          <strong>El estado vibracional</strong>
+          <p>Siente las vibraciones sin temerlas; déjalas crecer y estabilizarse antes de moverte.</p>
+        </li>
+        <li data-step="05">
+          <span class="step-n">05</span>
+          <strong>Técnica de salida</strong>
+          <p>Imagina rodar, levantarte o flotar fuera del cuerpo. Mantén calma y voluntad firme.</p>
+        </li>
+        <li data-step="06">
+          <span class="step-n">06</span>
+          <strong>Verificación</strong>
+          <p>Mira tus manos, sal del dormitorio o pide ir a un entorno determinado. Confirma que estás proyectado.</p>
+        </li>
+      </ol>
+    </section>
 
-    <div class="callout red">
-      🔥 <strong>Spoiler:</strong> No hay contenido aburrido aquí. Si algo no te resulta útil o interesante,
-      me lo dices y lo mejoro. La retroalimentación siempre es bienvenida.
-    </div>
+    <!-- ── Sobre ── -->
+    <section class="about" id="sobre">
+      <h2>Sobre esta colección</h2>
+      <p>
+        Esta biblioteca reúne lecturas significativas sobre la proyección astral, una práctica descrita
+        a lo largo de siglos por místicos, investigadores y exploradores de la conciencia. La intención
+        es ofrecerte un punto de partida sólido: obras que resisten el escrutinio y
+        acompañan tanto al lector curioso como al practicante decidido.
+      </p>
+      <p class="muted">
+        Los enlaces dirigen a fuentes públicas (Open Library u otros). Apoya a los autores y a tu
+        librería de confianza adquiriendo tus ejemplares.
+      </p>
+    </section>
+  </main>
 
-    <h2 id="sobre-mi">👤 ¿Quién soy yo?</h2>
-    <p>
-      Soy <strong>eirikrrrr</strong> 👾, un desarrollador apasionado por construir cosas en internet.
-      Me encanta experimentar con nuevas tecnologías, resolver problemas complicados de formas simples y
-      compartir lo que aprendo en el camino.
-    </p>
-    <p>
-      Este blog es mi cuaderno público. Aquí apunto todo aquello que me parece interesante, útil o que
-      simplemente quiero recordar. Y si a ti también te sirve — ¡perfecto!
-    </p>
-
-    <hr />
-
-    <h2>🚀 ¿Qué viene a continuación?</h2>
-    <p>
-      Ya tengo varios posts en mente que iré publicando próximamente. Entre ellos:
-    </p>
-    <ol>
-      <li>⚡ Cómo monté este blog desde cero</li>
-      <li>🎨 El proceso de diseñar una paleta de colores llamativa y funcional</li>
-      <li>🛠️ Mis herramientas favoritas para desarrollar en 2026</li>
-      <li>🤖 Experimentos con IA que realmente me sorprendieron</li>
-    </ol>
-
-    <p>
-      No te pierdas ninguno. ¡Vuelve pronto! 🙌
-    </p>
-
-  </article>
-
-  <!-- ─── Footer ─── -->
-  <footer>
-    <p>Hecho con <span class="red">❤️</span> y mucho <span>☕</span> por <strong>eirikrrrr</strong></p>
-    <p style="margin-top:.5rem">© 2026 — Todos los derechos reservados</p>
+  <footer class="site-footer">
+    <p><span class="sigil">☆</span> Astral · Biblioteca esotérica <span class="sigil">☆</span></p>
+    <p class="muted small">Curado por eirikrrrr · Datos gestionados en SQLite · Estático sobre GitHub Pages</p>
   </footer>
 
+  <!-- ── Modal de detalle ── -->
+  <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop" data-close></div>
+    <article class="modal-card" role="document">
+      <button class="modal-close" data-close aria-label="Cerrar">✕</button>
+      <div class="modal-cover" id="modal-cover"></div>
+      <div class="modal-body">
+        <p class="modal-cat" id="modal-cat"></p>
+        <h3 id="modal-title"></h3>
+        <p class="modal-author" id="modal-author"></p>
+        <div class="modal-meta" id="modal-meta"></div>
+        <p class="modal-desc" id="modal-desc"></p>
+        <a class="modal-link" id="modal-link" target="_blank" rel="noopener noreferrer">Conseguir el libro <span aria-hidden="true">↗</span></a>
+        <div class="modal-rating" id="modal-rating" aria-label="Valoración"></div>
+      </div>
+    </article>
+  </div>
+
+  <script src="assets/books.js"></script>
+  <script src="assets/app.js"></script>
 </body>
 </html>
