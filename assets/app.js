@@ -6,7 +6,7 @@
   'use strict';
 
   const BOOKS = Array.isArray(window.__BOOKS__) ? window.__BOOKS__ : [];
-  const state = { q: '', category: 'Todos', view: [] };
+  const state = { q: '', view: [] };
 
   const $  = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -27,7 +27,7 @@
     return n;
   };
 
-  const categories = () => ['Todos', ...new Set(BOOKS.map(b => b.category))];
+  /* (filtros por categoría eliminados a petición del usuario) */
 
   /* Renderiza estrellas ★ de valoración */
   const starsHTML = r => {
@@ -110,7 +110,6 @@
   function computeView() {
     const q = state.q.trim().toLowerCase();
     state.view = BOOKS.filter(b => {
-      if (state.category !== 'Todos' && b.category !== state.category) return false;
       if (!q) return true;
       const hay = [b.title, b.author, b.description, b.category].filter(Boolean).join(' ').toLowerCase();
       return hay.includes(q);
@@ -136,29 +135,6 @@
     count.innerHTML = state.view.length === 0
       ? ''
       : `<strong>${state.view.length}</strong> de ${BOOKS.length} obras`;
-  }
-
-  /* ── Chips de filtro ── */
-  function renderFilters() {
-    const wrap = $('#filters');
-    wrap.innerHTML = '';
-    const cats = categories();
-    const counts = Object.fromEntries(cats.map(c => [c, 0]));
-    BOOKS.forEach(b => { counts[b.category] = (counts[b.category] || 0) + 1; counts['Todos']++; });
-    cats.forEach(cat => {
-      const active = cat === state.category;
-      const chip = el('button', {
-        type: 'button',
-        class: 'chip' + (active ? ' active' : ''),
-        role: 'tab',
-        'aria-selected': String(active),
-        onclick: () => { state.category = cat; renderFilters(); renderGrid(); }
-      },
-        cat,
-        el('span', { class: 'count' }, String(counts[cat] || 0))
-      );
-      wrap.appendChild(chip);
-    });
   }
 
   /* ── Modal ── */
@@ -207,9 +183,7 @@ const meta = $('#modal-meta');
   /* ── Stats del hero ── */
   function renderStats() {
     const countNode = $('[data-stat="count"]');
-    const catsNode = $('[data-stat="cats"]');
     if (countNode) countNode.textContent = BOOKS.length;
-    if (catsNode) catsNode.textContent = categories().length - 1;
   }
 
   /* ── Starfield animado en canvas ── */
@@ -279,7 +253,6 @@ const meta = $('#modal-meta');
   /* ── Init ── */
   function init() {
     renderStats();
-    renderFilters();
     renderGrid();
     initStarfield();
   }
