@@ -1,0 +1,51 @@
+---
+import Section from './Section.astro';
+import { juegos, portada, fichaSteam } from '@/data/steam';
+---
+
+{
+  juegos.length > 0 && (
+    <Section
+      id="juegos"
+      etiqueta="Steam"
+      titulo="A lo que juego"
+      intro="Lo que más horas se ha llevado."
+      fondo
+    >
+      {/* Fichas de ancho fijo en vez de rejilla: se ven igual de bien con
+          tres juegos que con diez, sin dejar huecos en la fila. */}
+      <ul class="flex flex-wrap gap-5">
+        {juegos.map((juego) => (
+          <li class="w-[calc(50%-0.625rem)] sm:w-44">
+            <a
+              href={fichaSteam(juego.appid)}
+              target="_blank"
+              rel="noopener"
+              class="group block"
+            >
+              <div class="overflow-hidden rounded-lg border border-line bg-raised transition-colors group-hover:border-accent/50">
+                <img
+                  src={portada(juego.appid)}
+                  alt={`Portada de ${juego.nombre}`}
+                  width="600"
+                  height="900"
+                  loading="lazy"
+                  decoding="async"
+                  referrerpolicy="no-referrer"
+                  class="aspect-[2/3] w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                />
+              </div>
+
+              <p class="mt-3 truncate text-sm text-bright" title={juego.nombre}>
+                {juego.nombre}
+              </p>
+              {juego.horas && (
+                <p class="font-mono text-xs text-muted">{juego.horas}</p>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
+}

@@ -1,0 +1,207 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------
+   Tipografías autoalojadas (subconjunto latino de Fontsource).
+   Sin peticiones a terceros: mejor LCP y nada que bloquee el render.
+---------------------------------------------------------------- */
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono Variable';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+/* ---------------------------------------------------------------
+   Sistema de diseño: negro + amarillo.
+   Los tokens se exponen como utilidades de Tailwind (bg-surface,
+   text-accent, border-line, font-mono, ...).
+---------------------------------------------------------------- */
+@theme {
+  /* Superficies, de más oscura a más clara */
+  --color-void: #000000;
+  --color-ink: #0a0a0a;
+  --color-surface: #121212;
+  --color-raised: #1a1a1a;
+  --color-line: #262626;
+  --color-line-strong: #3a3a3a;
+
+  /* Texto */
+  --color-bright: #f5f5f5;
+  --color-body: #d4d4d4;
+  --color-muted: #8f8f8f;
+
+  /* Marca */
+  --color-accent: #ffd400;
+  --color-accent-soft: #ffe14d;
+  --color-accent-dim: #8a7300;
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Ritmo vertical uniforme entre secciones */
+  --spacing-section: 7rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Evita que el header fijo tape los títulos al navegar por anclas */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-bright);
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-void);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 68rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+/* Etiqueta monoespaciada que encabeza cada sección */
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* ---------------------------------------------------------------
+   Impresión: /cv se imprime en A4 sobre blanco. El PDF que se
+   publica en el sitio se genera desde esta misma hoja de estilos.
+---------------------------------------------------------------- */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 14mm 16mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    font-size: 10.5pt;
+    line-height: 1.45;
+  }
+
+  /* Las utilidades de Tailwind fijan el color en cada elemento, así que una
+     regla sobre `body` no basta: sin este reinicio el texto se imprime en
+     gris claro sobre blanco y queda ilegible. */
+  *,
+  *::before,
+  *::after {
+    color: #16181d !important;
+    background-color: transparent !important;
+    border-color: #d4d4d8 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: #000000 !important;
+    letter-spacing: -0.01em;
+    /* Un encabezado no debe quedar solo al final de una página */
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  a {
+    color: #16181d !important;
+    text-decoration: none;
+  }
+
+  /* Texto secundario: fechas, empresa, tecnologías */
+  .cv-tenue,
+  .cv-tenue * {
+    color: #5c6068 !important;
+  }
+
+  /* La viñeta es un fondo, no texto: hay que devolvérselo tras el reinicio */
+  .cv-vineta {
+    background-color: #9aa0a6 !important;
+  }
+
+  img {
+    filter: none !important;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  /* Evita cortes a mitad de un puesto o un proyecto */
+  .print-block {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-page-break {
+    break-before: page;
+    page-break-before: always;
+  }
+}

@@ -1,0 +1,40 @@
+---
+import Base from '@/layouts/Base.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { perfil } from '@/data/perfil';
+---
+
+<Base
+  titulo={`Página no encontrada — ${perfil.nombreCorto}`}
+  descripcion="La página que buscas no existe."
+  indexable={false}
+>
+  <Header />
+
+  <main id="contenido" class="container-page flex min-h-[60vh] flex-col justify-center py-20">
+    <p class="font-mono text-sm text-accent">Error 404</p>
+    <h1 class="mt-4 text-4xl font-semibold md:text-5xl">Esta página no existe</h1>
+    <p class="mt-5 max-w-lg text-lg text-muted">
+      El enlace está roto o la página se movió. Desde el inicio puedes llegar a todo lo
+      demás.
+    </p>
+
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a
+        href="/"
+        class="rounded-md bg-accent px-6 py-3 font-semibold text-void transition-colors hover:bg-accent-soft"
+      >
+        Volver al inicio
+      </a>
+      <a
+        href="/cv"
+        class="rounded-md border border-line-strong px-6 py-3 font-semibold text-bright transition-colors hover:border-accent hover:text-accent"
+      >
+        Ver el currículum
+      </a>
+    </div>
+  </main>
+
+  <Footer />
+</Base>

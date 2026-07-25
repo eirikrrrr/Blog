@@ -1,0 +1,216 @@
+---
+import { Image } from 'astro:assets';
+import Base from '@/layouts/Base.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import foto from '@/assets/profile-picture.jpg';
+import { perfil } from '@/data/perfil';
+import { experiencia } from '@/data/experiencia';
+import { proyectos } from '@/data/proyectos';
+import { stack } from '@/data/stack';
+import { jsonLdCv } from '@/lib/jsonld';
+
+// Enlaces de contacto sin el esquema, que ocupa espacio y no aporta en papel.
+const contacto = [
+  { texto: perfil.email, href: `mailto:${perfil.email}` },
+  { texto: 'linkedin.com/in/erick-alejandro-graterol-14a962266', href: perfil.linkedin },
+  { texto: 'github.com/eirikrrrr', href: perfil.github },
+  { texto: perfil.ubicacion, href: null },
+];
+---
+
+<Base
+  titulo={`Currículum — ${perfil.nombre}, ${perfil.rol}`}
+  descripcion={`Currículum de ${perfil.nombre}, ${perfil.rol}: cinco años entre operación de red y desarrollo de automatización con Python y Go.`}
+  jsonLd={jsonLdCv()}
+>
+  <Header />
+
+  <main id="contenido" class="print:py-0">
+    <!-- Barra de acciones: no se imprime -->
+    <div class="border-b border-line bg-surface py-6 print-hidden">
+      <div class="container-page flex flex-wrap items-center justify-between gap-4">
+        <p class="text-sm text-muted">
+          Esta página es el currículum. También puedes descargarlo en PDF.
+        </p>
+        <a
+          href={perfil.cvPdf}
+          download
+          class="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-void transition-colors hover:bg-accent-soft"
+        >
+          Descargar PDF
+        </a>
+      </div>
+    </div>
+
+    <div class="container-page max-w-3xl py-14 print:max-w-none print:py-0">
+      <!-- Cabecera -->
+      <header class="print-block flex items-start justify-between gap-6">
+        <div>
+          <h1 class="text-3xl font-semibold md:text-4xl print:text-2xl">{perfil.nombre}</h1>
+          <p class="mt-2 font-mono text-sm text-accent print:text-[10pt]">{perfil.rol}</p>
+
+          <ul
+            class="cv-tenue mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted print:mt-2 print:text-[9.5pt]"
+          >
+            {
+              contacto.map((c) => (
+                <li>
+                  {c.href ? (
+                    <a href={c.href} class="transition-colors hover:text-accent">
+                      {c.texto}
+                    </a>
+                  ) : (
+                    c.texto
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <Image
+          src={foto}
+          alt={`Fotografía de ${perfil.nombre}`}
+          width={104}
+          height={104}
+          densities={[1, 2]}
+          class="hidden h-24 w-24 shrink-0 rounded-lg object-cover sm:block print:block print:h-[26mm] print:w-[26mm]"
+        />
+      </header>
+
+      <!-- Resumen -->
+      <section class="mt-10 print-block print:mt-6">
+        <h2
+          class="border-b border-line pb-2 font-mono text-xs uppercase tracking-[0.14em] text-accent print:border-neutral-300 print:text-black"
+        >
+          Perfil
+        </h2>
+        {
+          perfil.resumenCv.map((parrafo) => (
+            <p class="mt-4 text-body first:mt-4 print:mt-2 print:text-[10pt]">{parrafo}</p>
+          ))
+        }
+      </section>
+
+      <!-- Experiencia -->
+      <section class="mt-10 print:mt-6">
+        <h2
+          class="border-b border-line pb-2 font-mono text-xs uppercase tracking-[0.14em] text-accent print:border-neutral-300 print:text-black"
+        >
+          Experiencia
+        </h2>
+
+        <div class="mt-6 space-y-8 print:mt-3 print:space-y-4">
+          {
+            experiencia.map((puesto) => (
+              <article class="print-block">
+                <div class="flex flex-wrap items-baseline justify-between gap-x-4">
+                  <h3 class="text-lg font-semibold print:text-[11.5pt]">{puesto.cargo}</h3>
+                  <p class="cv-tenue font-mono text-xs text-muted print:text-[9pt]">
+                    {puesto.periodo}
+                  </p>
+                </div>
+                <p class="cv-tenue mt-0.5 text-sm text-muted print:text-[9.5pt]">
+                  {puesto.empresa} · {puesto.ubicacion}
+                </p>
+
+                <ul class="mt-3 space-y-1.5 print:mt-1.5 print:space-y-0.5">
+                  {puesto.logros.map((logro) => (
+                    <li class="flex gap-2.5 text-body print:text-[10pt]">
+                      <span
+                        aria-hidden="true"
+                        class="cv-vineta mt-2 h-px w-2.5 shrink-0 bg-accent-dim print:mt-[0.45em]"
+                      />
+                      <span>{logro}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <p class="cv-tenue mt-2.5 font-mono text-xs text-muted print:mt-1 print:text-[8.5pt]">
+                  {puesto.tecnologias.join(' · ')}
+                </p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Proyectos -->
+      <section class="mt-10 print:mt-6">
+        <h2
+          class="border-b border-line pb-2 font-mono text-xs uppercase tracking-[0.14em] text-accent print:border-neutral-300 print:text-black"
+        >
+          Proyectos destacados
+        </h2>
+
+        <div class="mt-6 space-y-6 print:mt-3 print:space-y-3">
+          {
+            proyectos.map((p) => (
+              <article class="print-block">
+                <h3 class="text-base font-semibold print:text-[11pt]">{p.titulo}</h3>
+                <p class="mt-1.5 text-body print:mt-0.5 print:text-[10pt]">{p.gancho}</p>
+                <p class="cv-tenue mt-1.5 font-mono text-xs text-muted print:text-[8.5pt]">
+                  {p.tecnologias.join(' · ')}
+                </p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Stack -->
+      <section class="mt-10 print-block print:mt-6">
+        <h2
+          class="border-b border-line pb-2 font-mono text-xs uppercase tracking-[0.14em] text-accent print:border-neutral-300 print:text-black"
+        >
+          Stack técnico
+        </h2>
+        <dl class="mt-4 space-y-2 print:mt-2 print:space-y-1">
+          {
+            stack.map((grupo) => (
+              <div class="flex flex-col gap-x-4 sm:flex-row">
+                <dt class="cv-tenue w-52 shrink-0 font-mono text-xs uppercase tracking-wide text-muted print:text-[9pt]">
+                  {grupo.categoria}
+                </dt>
+                <dd class="text-body print:text-[10pt]">{grupo.items.join(' · ')}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <!-- Datos personales -->
+      <section class="mt-10 print-block print:mt-6">
+        <h2
+          class="border-b border-line pb-2 font-mono text-xs uppercase tracking-[0.14em] text-accent print:border-neutral-300 print:text-black"
+        >
+          Datos personales
+        </h2>
+        <dl class="mt-4 space-y-2 print:mt-2 print:space-y-1">
+          {
+            [
+              { clave: 'Edad', valor: `${perfil.edad} años` },
+              { clave: 'Nacionalidad', valor: perfil.nacionalidad },
+              { clave: 'Situación laboral', valor: perfil.permiso },
+              {
+                clave: 'Idiomas',
+                valor: perfil.idiomas.map((i) => `${i.idioma} (${i.nivel})`).join(' · '),
+              },
+              { clave: 'Disponibilidad', valor: `${perfil.modalidad} · ${perfil.ubicacion}` },
+            ].map((fila) => (
+              <div class="flex flex-col gap-x-4 sm:flex-row">
+                <dt class="cv-tenue w-52 shrink-0 font-mono text-xs uppercase tracking-wide text-muted print:text-[9pt]">
+                  {fila.clave}
+                </dt>
+                <dd class="text-body print:text-[10pt]">{fila.valor}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</Base>

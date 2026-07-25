@@ -1,0 +1,50 @@
+---
+import Section from './Section.astro';
+import { experiencia } from '@/data/experiencia';
+---
+
+<Section
+  id="experiencia"
+  etiqueta="Trayectoria"
+  titulo="De configurar la red a programarla"
+  intro="Dos años configurando equipos a mano y dos escribiendo el software que hace ese trabajo por sí solo."
+>
+  <ol class="relative border-l border-line pl-8 md:pl-10">
+    {
+      experiencia.map((puesto) => (
+        <li class="relative pb-14 last:pb-0">
+          <span
+            aria-hidden="true"
+            class="absolute -left-[calc(2rem+5px)] top-1.5 h-2.5 w-2.5 rounded-full bg-accent ring-4 ring-ink md:-left-[calc(2.5rem+5px)]"
+          />
+
+          <p class="font-mono text-xs tracking-wide text-accent">{puesto.periodo}</p>
+
+          <h3 class="mt-2 text-xl font-semibold">{puesto.cargo}</h3>
+          <p class="mt-1 text-muted">
+            {puesto.empresa} · {puesto.ubicacion}
+          </p>
+
+          <p class="mt-4 max-w-2xl text-body">{puesto.resumen}</p>
+
+          <ul class="mt-4 max-w-2xl space-y-2">
+            {puesto.logros.map((logro) => (
+              <li class="flex gap-3 text-body">
+                <span aria-hidden="true" class="mt-2 h-px w-3 shrink-0 bg-accent-dim" />
+                <span>{logro}</span>
+              </li>
+            ))}
+          </ul>
+
+          <ul class="mt-5 flex flex-wrap gap-2">
+            {puesto.tecnologias.map((t) => (
+              <li class="rounded border border-line px-2 py-1 font-mono text-xs text-muted">
+                {t}
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ol>
+</Section>

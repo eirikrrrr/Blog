@@ -1,80 +1,90 @@
-# Astral · Biblioteca esotérica
+# eirikrrrr.github.io
 
-Una página web estática (SPA en JavaScript vanilla) que expone una colección curada de libros sobre **viajes astrales y cómo realizarlos**. Diseño editorial esotérico (indigo + oro, starfield animado, portadas procedurales) servido desde GitHub Pages.
+Sitio personal de **Erick Alejandro Graterol** — Network Automation & AI Engineer.
+Landing, currículum en HTML y PDF, y fichas técnicas de proyectos.
 
-🌐 **Sitio**: [eirikrrrr.github.io](https://eirikrrrr.github.io)
+🌐 https://eirikrrrr.github.io
 
 ## Stack
 
-- **Frontend**: HTML + CSS + JavaScript vanilla (sin frameworks, sin build step).
-- **Datos**: SQLite (`data/books.db`) gestionado con `scripts/seed_books.py`.
-- **Export**: `scripts/export_books.py` genera `assets/books.js` (array con los enlaces ya hardcodeados) que la SPA carga.
-- **Deploy**: GitHub Actions publica `index.html` + `assets/` en GitHub Pages.
+- **[Astro 7](https://astro.build)** — sitio estático, cero JavaScript en el cliente.
+- **[Tailwind CSS 4](https://tailwindcss.com)** — vía `@tailwindcss/vite`.
+- **TypeScript** — todo el contenido está tipado en `src/data/`.
+- **Playwright** — imprime el CV en PDF durante el despliegue.
 
-## Flujo de edición de libros
-
-### Añadir un libro (recomendado)
+## Desarrollo
 
 ```bash
-# Modo interactivo: te pregunta título, ISBN, link de Drive, categoría, etc.
-uv run python scripts/add_book.py
+npm install
+npm run dev        # http://localhost:4321
 ```
+
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | Servidor de desarrollo con recarga en caliente |
+| `npm run build` | Genera el sitio estático en `dist/` |
+| `npm run pdf` | Imprime `dist/cv-erick-graterol.pdf` desde la página `/cv` |
+| `npm run sitio` | `build` + `pdf` — la cadena completa, igual que en CI |
+| `npm run check` | Comprobación de tipos y plantillas |
+| `npm run imagenes` | Regenera `og-image.png` y `apple-touch-icon.png` |
+
+Para `npm run pdf` en local hace falta el navegador de Playwright una única vez:
 
 ```bash
-# Modo directo (un solo comando). Enriquece metadatos desde Open Library con el ISBN:
-uv run python scripts/add_book.py "Título del libro" \
-    --isbn 1660008069 \
-    --link https://drive.google.com/file/d/XXXX/preview \
-    --category "Manual práctico"
+npx playwright install chromium
 ```
 
-`add_book.py` inserta en `data/books.db` y regenera `assets/books.js` automáticamente.
-Si el ISBN no existe en Open Library te pedirá autor/año/páginas a mano.
-Si no tiene ISBN, usa `--isbn Anonimo` y se marca como anónimo.
+## Editar el contenido
 
-### Regenerar desde cero la semilla
+Todo el texto vive en `src/data/`. No hace falta tocar los componentes:
 
-```bash
-# Solo si quieres resetear la DB a los 10 libros iniciales:
-uv run python scripts/seed_books.py
+| Archivo | Contenido |
+|---|---|
+| `perfil.ts` | Nombre, rol, presentación, contacto, ubicación, SEO |
+| `experiencia.ts` | Puestos, fechas, logros y métricas del hero |
+| `proyectos.ts` | Casos técnicos — cada uno genera su página en `/proyectos/[slug]` |
+| `stack.ts` | Stack técnico y los tres bloques de especialidad |
+| `intereses.ts` | Aficiones y perfiles públicos (Steam, Discord, Spotify…) |
 
-# Reexportar books.js sin añadir libros:
-uv run python scripts/export_books.py
-```
-
-> El esquema de la tabla `books` está en `scripts/seed_books.py`.
-> Commit `data/books.db` y `assets/books.js`; esta última se regenera en CI antes del deploy.
-
-## Desarrollo local
-
-Simplemente abre `index.html` en tu navegador, o sirve el directorio con cualquier servidor estático (la web no necesita compilación).
-
-```bash
-python3 -m http.server 8000
-```
+La web y el PDF leen de los mismos archivos, así que **no pueden desincronizarse**.
 
 ## Estructura
 
 ```
-index.html              # SPA shell
-assets/
-  styles.css            # Diseño (paleta celestial)
-  app.js                # Render, búsqueda, filtros, modal, starfield
-  books.js              # Generado — NO editar a mano
-data/
-  books.db              # SQLite (fuente de verdad)
-scripts/
-  seed_books.py         # Crea + siembra la DB (reset a los 10 iniciales)
-  add_book.py           # CLI/interactivo para añadir libros (enriquece con ISBN)
-  export_books.py       # DB → books.js
-.github/workflows/
-  deploy.yml            # Deploy a GitHub Pages
-.mkdocs.yml, docs/      # Blog MkDocs previo (conservado, sin desplegar)
+src/
+  assets/       Imágenes procesadas por Astro (optimización automática)
+  components/   Componentes .astro de cada sección
+  data/         El contenido (ver tabla de arriba)
+  layouts/      Base.astro — SEO, Open Graph y JSON-LD
+  lib/          jsonld.ts — datos estructurados schema.org
+  pages/        index · cv · 404 · proyectos/[slug]
+  styles/       global.css — tokens de diseño y hoja de impresión
+public/         Fuentes, favicon, robots.txt, llms.txt, foto, imagen OG
+scripts/        Generación del PDF y de las imágenes
 ```
+
+## SEO
+
+- Datos estructurados `Person`, `WebSite`, `ProfilePage`, `CreativeWork` y `BreadcrumbList`.
+- `sitemap-index.xml` generado en cada build, `robots.txt`, canonicals y `llms.txt`.
+- Open Graph y Twitter Card con imagen propia de 1200×630.
+- Sin JavaScript en el cliente, CSS crítico incrustado y tipografías autoalojadas.
+
+Tras el primer despliegue, dar de alta el sitio en
+[Google Search Console](https://search.google.com/search-console) y
+[Bing Webmaster Tools](https://www.bing.com/webmasters), y enviar el sitemap.
+
+## Despliegue
+
+Automático en cada `push` a `main` mediante GitHub Actions
+(`.github/workflows/deploy.yml`): comprueba tipos, construye, imprime el PDF y publica.
+
+Requisito único en el repositorio: **Settings → Pages → Source: GitHub Actions**.
 
 ## Notas
 
-- Los enlaces dirigen a fuentes públicas (Open Library u otros). Apoya a los autores y a tu librería de confianza.
-- El blog MkDocs previo (`docs/`, `mkdocs.yml`) se conserva en el repo pero ya no se despliega.
-
-Hecho con ✦ por eirikrrrr
+- Las tipografías (`public/fonts/`) son el subconjunto latino de
+  [Fontsource](https://fontsource.org) — Inter Variable y JetBrains Mono Variable —
+  copiadas al repositorio para servirlas desde el propio dominio.
+- La imagen Open Graph se compone con Liberation Sans, la grotesca disponible en el
+  sistema. Si se instala Inter en el sistema, `npm run imagenes` la usará.

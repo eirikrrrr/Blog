@@ -1,0 +1,42 @@
+# Erick Alejandro Graterol
+
+> Network Automation & AI Engineer. Automatiza infraestructura de red con Python y Go:
+> conexión masiva por SSH, inventarios, APIs y monitoreo automático sobre equipos
+> Mikrotik, Cisco y Juniper. Basado en Alicante, España. Disponible para incorporarse
+> a un equipo, en remoto o híbrido.
+
+## Perfil
+
+- **Rol**: Network Automation & AI Engineer
+- **Edad**: 23 años
+- **Nacionalidad**: venezolana, con permiso de residencia y trabajo en España (TIE/NIE)
+- **Ubicación**: Alicante, España
+- **Experiencia**: 2 años configurando y administrando dispositivos de red
+  (routers, switches, servidores, firewalls, OSPF) y 2 años desarrollando
+  automatización de red.
+- **Lenguajes**: Python, Go, JavaScript
+- **Backend**: FastAPI, Django, APIs REST
+- **Bases de datos**: PostgreSQL, MariaDB, SQLite
+- **Fabricantes de red**: Mikrotik, Cisco, Juniper
+- **Redes**: SSH masivo, OSPF, firewalls, routers y switches, Zabbix
+- **Idiomas**: español (nativo), inglés (B1)
+- **Formación**: autodidacta, sin titulación universitaria.
+
+## Páginas
+
+- [Inicio](https://eirikrrrr.github.io/): perfil, experiencia, proyectos y stack.
+- [Currículum](https://eirikrrrr.github.io/cv): CV completo, también en PDF.
+- [Motor SSH masivo](https://eirikrrrr.github.io/proyectos/motor-ssh-masivo): herramienta
+  de conexión concurrente a más de 10.000 dispositivos de red.
+- [Inventario de red](https://eirikrrrr.github.io/proyectos/inventario-red-api): base de
+  datos y API REST de inventario alimentada desde los propios dispositivos.
+- [Topología en Zabbix](https://eirikrrrr.github.io/proyectos/topologia-zabbix):
+  generación automática de mapas topológicos de red.
+- [Bots de Slack y Discord](https://eirikrrrr.github.io/proyectos/bots-slack-discord):
+  bots que exponen herramientas y datos internos como comandos de chat.
+
+## Contacto
+
+- Email: erickgraterolbarico@gmail.com
+- LinkedIn: https://www.linkedin.com/in/erick-alejandro-graterol-14a962266/
+- GitHub: https://github.com/eirikrrrr

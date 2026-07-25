@@ -1,0 +1,29 @@
+---
+import { perfil, navegacion } from '@/data/perfil';
+
+const anio = new Date().getFullYear();
+---
+
+<footer class="border-t border-line py-10 print-hidden">
+  <div
+    class="container-page flex flex-col items-center justify-between gap-6 text-sm text-muted sm:flex-row"
+  >
+    <p>© {anio} {perfil.nombre}</p>
+
+    <nav aria-label="Pie de página" class="flex flex-wrap justify-center gap-x-6 gap-y-2">
+      {
+        navegacion.map((item) => (
+          <a href={item.href} class="transition-colors hover:text-bright">
+            {item.texto}
+          </a>
+        ))
+      }
+      <a href={perfil.github} rel="me noopener" class="transition-colors hover:text-bright">
+        GitHub
+      </a>
+      <a href={perfil.linkedin} rel="me noopener" class="transition-colors hover:text-bright">
+        LinkedIn
+      </a>
+    </nav>
+  </div>
+</footer>

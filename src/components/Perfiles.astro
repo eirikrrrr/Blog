@@ -1,0 +1,64 @@
+---
+import Section from './Section.astro';
+import IconoRed from './IconoRed.astro';
+import { perfiles, aficiones, introIntereses } from '@/data/intereses';
+
+// Un perfil sin URL y enlazable no se publica: el sitio nunca muestra un
+// enlace roto mientras falten datos por rellenar.
+const visibles = perfiles.filter((p) => p.url !== null || p.enlazable === false);
+---
+
+<Section
+  id="perfiles"
+  etiqueta="Fuera del trabajo"
+  titulo="Dónde encontrarme"
+  intro={introIntereses}
+>
+  <ul class="mb-10 flex flex-wrap gap-2">
+    {
+      aficiones.map((a) => (
+        <li class="rounded-full border border-line bg-surface px-3 py-1.5 text-sm text-body">
+          {a}
+        </li>
+      ))
+    }
+  </ul>
+
+  <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      visibles.map((p) => {
+        const Etiqueta = p.url ? 'a' : 'div';
+        return (
+          <li>
+            <Etiqueta
+              href={p.url ?? undefined}
+              rel={p.url ? 'me noopener' : undefined}
+              target={p.url ? '_blank' : undefined}
+              class:list={[
+                'flex items-center gap-4 rounded-lg border border-line bg-surface p-4 transition-colors',
+                p.url && 'hover:border-accent/50 hover:bg-raised',
+              ]}
+            >
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-raised text-accent">
+                <IconoRed red={p.red} />
+              </span>
+
+              <span class="min-w-0 flex-1">
+                <span class="block font-mono text-xs uppercase tracking-[0.14em] text-muted">
+                  {p.red}
+                </span>
+                <span class="block truncate text-bright">{p.handle}</span>
+              </span>
+
+              {p.url && (
+                <span aria-hidden="true" class="text-muted">
+                  ↗
+                </span>
+              )}
+            </Etiqueta>
+          </li>
+        );
+      })
+    }
+  </ul>
+</Section>

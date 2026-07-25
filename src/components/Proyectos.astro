@@ -1,0 +1,51 @@
+---
+import Section from './Section.astro';
+import { proyectos } from '@/data/proyectos';
+---
+
+<Section
+  id="proyectos"
+  etiqueta="Proyectos"
+  titulo="Lo que he construido"
+  intro="Herramientas internas de operación de red. Cada una nació de un problema concreto que costaba días de trabajo manual."
+  fondo
+>
+  <div class="grid gap-6 md:grid-cols-2">
+    {
+      proyectos.map((p) => (
+        <article class="group flex flex-col rounded-lg border border-line bg-ink p-6 transition-colors hover:border-accent/50">
+          <div class="flex items-baseline gap-2">
+            <span class="font-mono text-2xl font-semibold text-accent">{p.metrica.valor}</span>
+            <span class="font-mono text-xs text-muted">{p.metrica.etiqueta}</span>
+          </div>
+
+          <h3 class="mt-4 text-lg font-semibold leading-snug">
+            <a href={`/proyectos/${p.slug}`} class="after:absolute after:inset-0">
+              <span class="relative">{p.tituloCorto}</span>
+            </a>
+          </h3>
+
+          <p class="mt-3 flex-1 text-body">{p.gancho}</p>
+
+          <ul class="mt-6 flex flex-wrap gap-2">
+            {p.tecnologias.slice(0, 3).map((t) => (
+              <li class="rounded border border-line bg-raised px-2 py-1 font-mono text-xs text-muted">
+                {t}
+              </li>
+            ))}
+          </ul>
+
+          <p class="mt-6 font-mono text-sm text-accent transition-transform group-hover:translate-x-1">
+            Ver el caso →
+          </p>
+        </article>
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  article {
+    position: relative;
+  }
+</style>

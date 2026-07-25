@@ -1,0 +1,95 @@
+---
+import '@/styles/global.css';
+import { perfil } from '@/data/perfil';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  /** Datos estructurados adicionales de la página. */
+  jsonLd?: Record<string, unknown>;
+  /** `noindex` para páginas que no aportan a la búsqueda (404). */
+  indexable?: boolean;
+  clase?: string;
+}
+
+const { titulo, descripcion, jsonLd, indexable = true, clase = '' } = Astro.props;
+
+// Con `build.format: 'file'` el pathname en build es "/cv.html" o
+// "/index.html". El canonical tiene que ser la URL pública limpia.
+const ruta =
+  Astro.url.pathname
+    .replace(/index\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/$/, '') || '/';
+const canonical = new URL(ruta, Astro.site).href;
+const ogImage = new URL('/og-image.png', Astro.site).href;
+---
+
+<!doctype html>
+<html lang="es" class="scheme-dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonical} />
+    {!indexable && <meta name="robots" content="noindex, follow" />}
+    <meta name="author" content={perfil.nombre} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- Las fuentes son parte del LCP: se piden antes de que el CSS las descubra -->
+    <link
+      rel="preload"
+      href="/fonts/inter-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content={perfil.nombre} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${perfil.nombre} — ${perfil.rol}`} />
+    <meta property="profile:first_name" content="Erick" />
+    <meta property="profile:last_name" content="Graterol" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titulo} />
+    <meta name="twitter:description" content={descripcion} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {
+      jsonLd && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(jsonLd)}
+        />
+      )
+    }
+  </head>
+
+  <body class={clase}>
+    <a
+      href="#contenido"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded focus:bg-accent focus:px-4 focus:py-2 focus:font-medium focus:text-void"
+    >
+      Saltar al contenido
+    </a>
+    <slot />
+  </body>
+</html>

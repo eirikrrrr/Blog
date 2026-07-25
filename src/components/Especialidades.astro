@@ -1,0 +1,30 @@
+---
+import Section from './Section.astro';
+import { especialidades } from '@/data/stack';
+---
+
+<Section
+  id="especialidades"
+  etiqueta="Qué hago"
+  titulo="Tres cosas, y las tres se tocan entre sí"
+  intro="Vengo de operar la red y ahora la programo. Esa mezcla es lo que me permite automatizar cosas que solo se le ocurren a quien las ha hecho a mano."
+  fondo
+>
+  <div class="grid gap-6 md:grid-cols-3">
+    {
+      especialidades.map((e) => (
+        <article class="flex flex-col rounded-lg border border-line bg-ink p-6 transition-colors hover:border-line-strong">
+          <h3 class="text-lg font-semibold">{e.titulo}</h3>
+          <p class="mt-3 flex-1 text-body">{e.descripcion}</p>
+          <ul class="mt-6 flex flex-wrap gap-2">
+            {e.items.map((item) => (
+              <li class="rounded border border-line bg-raised px-2 py-1 font-mono text-xs text-muted">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+</Section>

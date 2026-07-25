@@ -1,0 +1,54 @@
+---
+import Section from './Section.astro';
+import { perfil } from '@/data/perfil';
+---
+
+<Section id="sobre-mi" etiqueta="Sobre mí" titulo="Cómo llegué hasta aquí" fondo>
+  <div class="grid gap-12 lg:grid-cols-[1fr_auto]">
+    <div class="max-w-2xl space-y-5 text-lg text-body">
+      {perfil.presentacion.map((parrafo) => <p>{parrafo}</p>)}
+    </div>
+
+    <dl class="space-y-6 lg:w-60">
+      <div>
+        <dt class="font-mono text-xs uppercase tracking-[0.14em] text-accent">Edad</dt>
+        <dd class="mt-3 text-body">{perfil.edad} años</dd>
+      </div>
+
+      <div>
+        <dt class="font-mono text-xs uppercase tracking-[0.14em] text-accent">Nacionalidad</dt>
+        <dd class="mt-3 text-body">{perfil.nacionalidad}</dd>
+      </div>
+
+      <div>
+        <dt class="font-mono text-xs uppercase tracking-[0.14em] text-accent">
+          Situación laboral
+        </dt>
+        <dd class="mt-3 text-body">{perfil.permiso}</dd>
+      </div>
+
+      <div>
+        <dt class="font-mono text-xs uppercase tracking-[0.14em] text-accent">Idiomas</dt>
+        <dd class="mt-3 space-y-1">
+          {
+            perfil.idiomas.map((i) => (
+              <p class="text-body">
+                {i.idioma} <span class="text-muted">· {i.nivel}</span>
+              </p>
+            ))
+          }
+        </dd>
+      </div>
+
+      <div>
+        <dt class="font-mono text-xs uppercase tracking-[0.14em] text-accent">Ubicación</dt>
+        <dd class="mt-3 text-body">{perfil.ubicacion}</dd>
+      </div>
+
+      <div>
+        <dt class="font-mono text-xs uppercase tracking-[0.14em] text-accent">Modalidad</dt>
+        <dd class="mt-3 text-body">{perfil.modalidad}</dd>
+      </div>
+    </dl>
+  </div>
+</Section>

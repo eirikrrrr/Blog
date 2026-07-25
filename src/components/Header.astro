@@ -1,0 +1,36 @@
+---
+import { perfil, navegacion } from '@/data/perfil';
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-line bg-ink/85 backdrop-blur-md print-hidden"
+>
+  <div class="container-page flex h-16 items-center justify-between gap-6">
+    <a
+      href="/"
+      class="font-mono text-sm font-semibold tracking-tight text-bright transition-colors hover:text-accent"
+    >
+      <span class="text-accent">&gt;</span> eirikrrrr
+    </a>
+
+    <nav aria-label="Principal" class="hidden items-center gap-7 md:flex">
+      {
+        navegacion.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm text-muted transition-colors hover:text-bright"
+          >
+            {item.texto}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a
+      href={`mailto:${perfil.email}`}
+      class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-void transition-colors hover:bg-accent-soft"
+    >
+      Contactar
+    </a>
+  </div>
+</header>

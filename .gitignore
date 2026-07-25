@@ -1,5 +1,16 @@
-site/
-pub/
-__pycache__/
-*.pyc
+# Dependencias
+node_modules/
+
+# Salida del build
+dist/
+.astro/
+
+# Entorno y editores
+.env
+.env.*
 .DS_Store
+.vscode/
+.idea/
+
+# Ajustes locales de Claude Code (específicos de esta máquina)
+.claude/settings.local.json

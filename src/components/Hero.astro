@@ -1,0 +1,96 @@
+---
+import { Image } from 'astro:assets';
+import foto from '@/assets/profile-picture.jpg';
+import { perfil } from '@/data/perfil';
+import { metricas } from '@/data/experiencia';
+---
+
+<section class="relative overflow-hidden">
+  <!-- Halo tenue detrás del titular; decorativo -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-64 left-1/2 h-[36rem] w-[60rem] -translate-x-1/2 rounded-full bg-accent/[0.045] blur-[120px]"
+  >
+  </div>
+
+  <div class="container-page relative py-20 md:py-28">
+    <div class="flex flex-col-reverse items-start gap-12 md:flex-row md:items-center md:gap-16">
+      <div class="flex-1">
+        <p class="eyebrow">{perfil.rol}</p>
+
+        <h1 class="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+          {perfil.nombre}
+        </h1>
+
+        <p class="mt-6 max-w-xl text-lg text-body md:text-xl">
+          {perfil.claim}
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3 font-mono text-sm">
+          <span class="inline-flex items-center gap-2 text-bright">
+            <span class="relative flex h-2 w-2">
+              <span
+                class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60"
+              ></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
+            </span>
+            {perfil.disponibilidad}
+          </span>
+          <span class="text-muted">{perfil.ubicacion}</span>
+          <span class="text-muted">{perfil.modalidad}</span>
+        </div>
+
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a
+            href={`mailto:${perfil.email}`}
+            class="rounded-md bg-accent px-6 py-3 font-semibold text-void transition-colors hover:bg-accent-soft"
+          >
+            Hablemos
+          </a>
+          <a
+            href="/cv"
+            class="rounded-md border border-line-strong px-6 py-3 font-semibold text-bright transition-colors hover:border-accent hover:text-accent"
+          >
+            Ver currículum
+          </a>
+        </div>
+      </div>
+
+      <div class="shrink-0">
+        <div class="relative">
+          <div
+            aria-hidden="true"
+            class="absolute -inset-1 rounded-2xl bg-gradient-to-br from-accent/40 to-transparent"
+          >
+          </div>
+          <Image
+            src={foto}
+            alt={`Fotografía de ${perfil.nombre}`}
+            width={208}
+            height={208}
+            densities={[1, 2]}
+            loading="eager"
+            fetchpriority="high"
+            class="relative h-40 w-40 rounded-2xl object-cover md:h-52 md:w-52"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Métricas -->
+    <dl class="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
+      {
+        metricas.map((m) => (
+          <div class="bg-ink px-6 py-5">
+            <dt class="sr-only">{m.etiqueta}</dt>
+            <dd>
+              <span class="font-mono text-3xl font-semibold text-accent">{m.valor}</span>
+              <span class="ml-2 font-mono text-sm text-muted">{m.unidad}</span>
+              <p class="mt-1 text-sm text-muted">{m.etiqueta}</p>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

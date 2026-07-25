@@ -1,0 +1,36 @@
+---
+import Base from '@/layouts/Base.astro';
+import Header from '@/components/Header.astro';
+import Hero from '@/components/Hero.astro';
+import Especialidades from '@/components/Especialidades.astro';
+import Experiencia from '@/components/Experiencia.astro';
+import Proyectos from '@/components/Proyectos.astro';
+import Stack from '@/components/Stack.astro';
+import SobreMi from '@/components/SobreMi.astro';
+import Perfiles from '@/components/Perfiles.astro';
+import Juegos from '@/components/Juegos.astro';
+import Contacto from '@/components/Contacto.astro';
+import Footer from '@/components/Footer.astro';
+import { perfil } from '@/data/perfil';
+import { jsonLdInicio } from '@/lib/jsonld';
+---
+
+<Base
+  titulo={`${perfil.nombre} — ${perfil.rol}`}
+  descripcion={perfil.descripcion}
+  jsonLd={jsonLdInicio()}
+>
+  <Header />
+  <main id="contenido">
+    <Hero />
+    <Especialidades />
+    <Experiencia />
+    <Proyectos />
+    <Stack />
+    <SobreMi />
+    <Perfiles />
+    <Juegos />
+    <Contacto />
+  </main>
+  <Footer />
+</Base>

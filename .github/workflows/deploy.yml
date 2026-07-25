@@ -1,9 +1,8 @@
-name: Deploy Astral SPA to GitHub Pages
+name: Desplegar sitio en GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -11,42 +10,56 @@ permissions:
   pages: write
   id-token: write
 
+# Un despliegue a la vez; no se cancelan los que ya están en curso.
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  construir:
+    name: Construir
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-node@v4
         with:
-          python-version: '3.13'
+          node-version: 22
+          cache: npm
 
-      - name: Regenerate assets/books.js from SQLite
-        run: python3 scripts/export_books.py
+      - name: Instalar dependencias
+        run: npm ci
 
-      - name: Stage publish directory
-        run: |
-          mkdir -p pub/assets
-          cp index.html pub/
-          cp -r assets/. pub/assets/
-          printf 'User-agent: *\n' > pub/robots.txt
+      - name: Comprobar tipos
+        run: npm run check
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+      - name: Construir el sitio
+        run: npm run build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      # El PDF del CV se imprime desde la página /cv ya construida, de modo
+      # que web y PDF salen siempre de la misma fuente de datos.
+      - name: Instalar Chromium para la impresión del PDF
+        run: npx playwright install --with-deps chromium
+
+      - name: Generar el CV en PDF
+        run: npm run pdf
+
+      - name: Verificar que el PDF existe
+        run: test -s dist/cv-erick-graterol.pdf
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: './pub'
+          path: ./dist
 
-      - name: Deploy to GitHub Pages
-        id: deployment
+  desplegar:
+    name: Desplegar
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - id: despliegue
         uses: actions/deploy-pages@v4

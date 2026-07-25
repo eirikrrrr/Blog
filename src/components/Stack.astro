@@ -1,0 +1,28 @@
+---
+import Section from './Section.astro';
+import { stack } from '@/data/stack';
+---
+
+<Section
+  id="stack"
+  etiqueta="Herramientas"
+  titulo="Stack técnico"
+  intro="Lo que uso a diario, no todo lo que he tocado alguna vez."
+>
+  <div class="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      stack.map((grupo) => (
+        <div>
+          <h3 class="border-b border-line pb-3 font-mono text-xs font-medium uppercase tracking-[0.14em] text-accent">
+            {grupo.categoria}
+          </h3>
+          <ul class="mt-4 space-y-2">
+            {grupo.items.map((item) => (
+              <li class="text-body">{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</Section>
