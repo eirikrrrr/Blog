@@ -45,7 +45,7 @@ export const perfiles: Perfil[] = [
   {
     red: 'Spotify',
     handle: 'eirikrrrr',
-    url: null, // ← pega aquí tu URL de perfil de Spotify y la tarjeta aparece sola
+    url: 'https://open.spotify.com/user/31tiue63gkbniknuiaukiubtncdy',
   },
 ];
 

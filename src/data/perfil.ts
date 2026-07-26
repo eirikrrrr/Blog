@@ -17,7 +17,7 @@ export const perfil = {
 
   // Párrafo de presentación (sección «Sobre mí» y resumen del CV).
   presentacion: [
-    'Empecé configurando routers, switches y servidores a mano, uno por uno, levantando firewalls y OSPF en una operadora. Después de dos años haciendo eso me cansé de repetir el mismo trabajo y aprendí a programar para quitármelo de encima.',
+    'Empecé configurando routers, switches y servidores a mano, uno por uno, levantando firewalls y OSPF en una operadora. Después de dos años haciendo eso identifiqué que gran parte del trabajo era repetitivo y aprendí a programar para automatizarlo.',
     'Desde entonces me dedico a eso: construir las herramientas que hacen ese trabajo solas. Código que se conecta a más de diez mil dispositivos a la vez, saca la información que hace falta, la guarda en una base de datos consultable por API y deja la topología dibujada en el monitoreo sin intervención manual. Trabajo sobre todo con Python y Go, y últimamente en agentes de IA aplicados a operaciones de red.',
     'No vengo de la universidad. Todo lo que sé lo aprendí resolviendo problemas de red reales, en producción, con equipos que no podían estar caídos.',
   ],
